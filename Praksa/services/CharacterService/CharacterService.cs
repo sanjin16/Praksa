@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Praksa.Dtos.Character;
 using Praksa.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -43,5 +44,29 @@ namespace Praksa.services.CharacterService
                 ServiceResponse.Data = _mapper.Map<GetCharacterDto>( characters.FirstOrDefault(c => c.Id == id));
                 return ServiceResponse;
             }
+
+        public async Task<ServiceResponse<GetCharacterDto>> UpdateCharacter(UpdateCharacterDto updatedCharacter)
+        {
+            var ServiceResponse = new ServiceResponse<GetCharacterDto>();
+            try
+            {
+                Character character = characters.FirstOrDefault(c => c.Id == updatedCharacter.Id);
+
+                character.Name = updatedCharacter.Name;
+                character.Strength = updatedCharacter.Strength;
+                character.Defense = updatedCharacter.Defense;
+                character.HitPoints = updatedCharacter.HitPoints;
+                character.Intelligence = updatedCharacter.Intelligence;
+                character.Class = updatedCharacter.Class;
+
+                ServiceResponse.Data = _mapper.Map<GetCharacterDto>(character);
+            } 
+            catch(Exception ex)
+            {
+                ServiceResponse.Success = false;
+                ServiceResponse.message = ex.Message;
+            }
+            return ServiceResponse;
+         }
     }
 }
