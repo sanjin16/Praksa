@@ -94,18 +94,27 @@ namespace Praksa.services.CharacterService
             var ServiceResponse = new ServiceResponse<GetCharacterDto>();
             try
             {
-                Character character = await _context.Characters.FirstOrDefaultAsync(c => c.Id == updatedCharacter.Id);
+                Character character = await _context.Characters
+                    .Include(c => c.User)
+                    .FirstOrDefaultAsync(c => c.Id == updatedCharacter.Id);
+                if (character.User.Id == GetUserId())
+                {
 
-                character.Name = updatedCharacter.Name;
-                character.Strength = updatedCharacter.Strength;
-                character.Defense = updatedCharacter.Defense;
-                character.HitPoints = updatedCharacter.HitPoints;
-                character.Intelligence = updatedCharacter.Intelligence;
-                character.Class = updatedCharacter.Class;
+                    character.Name = updatedCharacter.Name;
+                    character.Strength = updatedCharacter.Strength;
+                    character.Defense = updatedCharacter.Defense;
+                    character.HitPoints = updatedCharacter.HitPoints;
+                    character.Intelligence = updatedCharacter.Intelligence;
+                    character.Class = updatedCharacter.Class;
 
-                await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync();
 
-                ServiceResponse.Data = _mapper.Map<GetCharacterDto>(character);
+                    ServiceResponse.Data = _mapper.Map<GetCharacterDto>(character);
+                } else
+                {
+                    ServiceResponse.Success = false;
+                    ServiceResponse.message = "Character not found.";
+                }
             } 
             catch(Exception ex)
             {

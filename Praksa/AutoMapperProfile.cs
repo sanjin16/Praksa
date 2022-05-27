@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Praksa.Dtos.Character;
+using Praksa.Dtos.Weapon;
 using Praksa.Models;
 
 namespace Praksa
@@ -10,6 +11,7 @@ namespace Praksa
         {
             CreateMap<Character, GetCharacterDto>();
             CreateMap<AddCharacterDto, Character>();
+            CreateMap<Weapon, GetWeaponDto>();
         }
     }
 }

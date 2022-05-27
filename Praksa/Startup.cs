@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Praksa.Data;
 using Praksa.services.CharacterService;
+using Praksa.services.WeaponService;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace Praksa
@@ -56,6 +57,7 @@ namespace Praksa
                     };
                 });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IWeaponService, WeaponService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
