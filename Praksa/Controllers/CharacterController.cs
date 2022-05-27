@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Praksa.Dtos.Character;
 using Praksa.Models;
 using Praksa.services.CharacterService;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Praksa.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class CharacterController : ControllerBase
