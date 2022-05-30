@@ -48,7 +48,7 @@ namespace Praksa.services.WeaponService
 
                 response.Data = _mapper.Map<GetCharacterDto>(character);
 
-            } catch (Exception ex)
+            } catch (Exception ex) {
            
                 response.Success = false;
                 response.message = ex.Message;

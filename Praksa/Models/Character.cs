@@ -1,4 +1,6 @@
-﻿namespace Praksa.Models
+﻿using System.Collections.Generic;
+
+namespace Praksa.Models
 {
     public class Character
     {
@@ -11,6 +13,7 @@
         public RpgClass Class { get; set; } = RpgClass.Knight;
         public User User { get; set; }
         public Weapon weapon { get; set; }
+        public List<Skill> Skills { get; set; }
 
     }
 }
