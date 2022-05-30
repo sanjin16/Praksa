@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Praksa.Data;
 using Praksa.Dtos.Character;
+using Praksa.Dtos.Skill;
 using Praksa.Models;
 using System;
 using System.Collections.Generic;
@@ -123,5 +124,40 @@ namespace Praksa.services.CharacterService
             }
             return ServiceResponse;
          }
+
+        public async Task<ServiceResponse<GetCharacterDto>> AddCharacterSkill(AddCharacterSkillDto newCharacterSkill)
+        {
+            var response = new ServiceResponse<GetCharacterDto>();
+            try {
+                var character = await _context.Characters
+                    .Include(c => c.Weapon)
+                    .Include(c => c.Skills)
+                    .FirstOrDefaultAsync(c => c.Id == newCharacterSkill.CharacterId && c.User.Id == GetUserId());
+
+                if(character == null)
+                {
+                    response.Success = false;
+                    response.message = "Character not found.";
+                    return response;
+                }
+                var skill = await _context.Skills.FirstOrDefaultAsync(s => s.Id == newCharacterSkill.SkillId);
+                if(skill == null)
+                {
+                    response.Success = false;
+                    response.message = "Skill not found.";
+                    return response;
+                }
+                character.Skills.Add(skill);
+                await _context.SaveChangesAsync();
+
+                response.Data = _mapper.Map<GetCharacterDto>(character);
+            }
+            catch(Exception ex)
+            {
+                response.Success = false;
+                response.message = ex.Message;
+            }
+            return response;
+        }
     }
 }

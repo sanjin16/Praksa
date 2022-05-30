@@ -1,5 +1,7 @@
-﻿using Praksa.Dtos.Weapon;
+﻿using Praksa.Dtos.Skill;
+using Praksa.Dtos.Weapon;
 using Praksa.Models;
+using System.Collections.Generic;
 
 namespace Praksa.Dtos.Character
 {
@@ -13,5 +15,6 @@ namespace Praksa.Dtos.Character
         public int Intelligence { get; set; } = 10;
         public RpgClass Class { get; set; } = RpgClass.Knight;
         public GetWeaponDto Weapon { get; set; }
+        public List<GetSkillDto> Skills { get; set; }
     }
 }
