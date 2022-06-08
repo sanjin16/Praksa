@@ -92,6 +92,7 @@ namespace Praksa.Data
                 return true;
             }
         }
+        //Sanjin Sabanovic
 
         private string CreateToken(User user)
         {
